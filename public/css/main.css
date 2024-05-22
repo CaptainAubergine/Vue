@@ -296,3 +296,11 @@ form {
 	background-size: cover;
 	width: 55%;
 }
+
+form input {
+	border-radius: 16px;
+}
+
+form select {
+	border-radius: 2px;
+}
