@@ -29,13 +29,13 @@ export default {
 		unFired(index) {
 			this.$set(this.employees[index], 'fired', false);
 			console.log('EmployeeList fired: ', this.employees[index].fired);
-			this.$forceUpdate();
+			// this.$forceUpdate();
 		},
 	},
-	beforeRouteEnter(to, from, next) {
-		next(vm => {
-			vm.$forceUpdate();
-		}, { flush: true });
-	}
+	// beforeRouteEnter(to, from, next) {
+	// 	next(vm => {
+	// 		vm.$forceUpdate();
+	// 	}, { flush: true });
+	// }
 }
 </script>

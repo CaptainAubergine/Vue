@@ -45,11 +45,9 @@ export default {
 			// console.log(this.newEmployee);
 			this.newEmployee.birth_date = Math.floor(new Date(this.newEmployee.birth_date).getTime() / 1000)
 			this.$emit('onEmployeeAdded', this.newEmployee);
-			console.log(this.newEmployee);
+			console.log("Added new employee: ", this.newEmployee);
 			this.newEmployee = {};
 		},
 	}
 }
 </script>
-
-<style scoped></style>

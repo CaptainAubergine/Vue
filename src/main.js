@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 
 import MainPage from './pages/MainPage.vue';
 import EmployeeList from './pages/EmployeeList.vue';
+import EmployeePage from './pages/EmployeePage.vue';
 import AddEmployee from './pages/AddEmployee.vue';
 import FiredEmployees from './pages/FiredEmployees.vue';
 import NotFound from './pages/NotFound.vue';
@@ -14,7 +15,9 @@ Vue.use(VueRouter);
 
 const routes = [
 	{ path: '/', component: MainPage },
-	{ path: '/employee-list', component: EmployeeList, props: { employees: employees, fired: false } },
+	// { path: '/employee-page/:selectedEmployeeIndex', name: 'EmployeePage', component: EmployeePage, props: (route) => ({ employee: employees[parseInt(route.params.selectedEmployeeIndex)] }), },
+	{ path: '/employee-page/:selectedEmployeeIndex', name: 'EmployeePage', component: EmployeePage, props: (route) => ({ employeeIndex: parseInt(route.params.selectedEmployeeIndex), employees: employees }) },
+	{ path: '/employee-list', name: 'EmployeeList', component: EmployeeList, props: { employees: employees, fired: false } },
 	{ path: '/add-employee', component: AddEmployee, props: { employees: employees } },
 	{ path: '/fired-employees', component: FiredEmployees, props: { employees: employees, fired: true } },
 	{ path: '/404', component: NotFound },
@@ -24,6 +27,13 @@ const routes = [
 const router = new VueRouter({
 	routes,
 });
+
+Vue.filter('formatDate', function (value) {
+	const date = new Date(value * 1000)
+	return (date.toLocaleDateString('ru-RU') != "Invalid Date"
+		? date.toLocaleDateString('ru-RU') :
+		new Date(value).toLocaleDateString('ru-RU'))
+})
 
 new Vue({
 	router,

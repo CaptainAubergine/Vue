@@ -4,20 +4,20 @@
 			<input v-model="filter.name" type="text" placeholder="ФИО">
 			<input v-model="filter.birth_date" type="date" placeholder="Дата рождения">
 			<span>
-				<input name="male" type="radio" id="name" value="0" v-model="filter.sex">
+				<input class="checkbox" name="male" type="radio" id="name" value="0" v-model="filter.sex">
 				<label for="male">Мужской</label>
-				<input name="female" type="radio" id="name" value="1" v-model="filter.sex">
+				<input class="checkbox" name="female" type="radio" id="name" value="1" v-model="filter.sex">
 				<label for="female">Женский</label>
 			</span>
 			<input v-model="filter.organisation" type="text" placeholder="Организация">
 			<select v-model="filter.job_title">
-				<option value="" disabled selected hidden>Должность</option>
+				<option value="true" disabled selected hidden>Должность</option>
 				<option v-for="title in titles" :key="title" :value="title">{{ title }}</option>
 			</select>
-			<span>
+			<!-- <span>
 				<label for="fired">Уволен</label>
 				<input v-model="filter.fired" type="checkbox" value="false" name="fired">
-			</span>
+			</span> -->
 			<button type="submit">Применить</button>
 			<button @click="clearFilter">Отменить</button>
 			<span class="emplCount">
@@ -48,10 +48,14 @@ export default {
 		}
 	},
 	methods: {
+		dateToUnix(value) {
+			const date = Math.floor(new Date(value).getTime() / 100000000).toFixed(0)
+			return date
+		},
 		createFilter() {
-			this.filter.birth_date = Math.floor(new Date(this.filter.birth_date).getTime() / 1000)
+			this.filter.birth_date = this.dateToUnix(this.filter.birth_date)
 			this.$emit('createFilter', this.filter);
-			console.log(this.filter);
+			console.log("Filter: ", this.filter);
 		},
 		clearFilter() {
 			this.$emit("clearFilter")

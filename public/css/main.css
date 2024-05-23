@@ -75,6 +75,11 @@ p {
 	background-size: cover;
 }
 
+.works__item.image:hover {
+	cursor: pointer;
+	transform: scale(1.05) !important;
+}
+
 .works__left .text-block {
 	align-items: flex-end;
 	text-align: right;
@@ -252,7 +257,31 @@ p {
 	font-size: 18px;
 }
 
-.works-wrapper.wp button {
+.employee-page__p {
+	line-height: 45px;
+}
+
+.works-wrapper.employee-page {}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+.works-wrapper__button {
+	margin: 0 10px 0 10px;
+}
+
+.checkbox {
+	transform: scale(1.5);
+	margin: 0 10px 0 10px;
+}
+
+.emplPage-button {
+	margin: 25px 10px 0 10px;
+}
+
+button {
 	font-size: 20px;
 	border-radius: 16px;
 	background: rgba(0, 0, 0, 0.05);
@@ -262,7 +291,8 @@ p {
 	cursor: pointer;
 }
 
-form {
+form,
+.works-wrapper.employee-page {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
@@ -274,18 +304,36 @@ form .emplCount {
 	margin-bottom: 20px;
 }
 
-form label,
+label,
 span {
 	color: black;
 	font-size: 20px;
 }
 
-form input {
+.works__left .multiple-fire {
+	margin-right: 25px;
+}
+
+.works__right .multiple-fire {
+	margin-left: 25px;
+}
+
+form input,
+.works-wrapper.employee-page input {
 	font-size: 14px;
 }
 
-form {
+form,
+.works-wrapper.employee-page {
 	margin: 0 10% 0 10%;
+}
+
+.employee-page__img {
+	border-radius: 50px 0px 50px 0px;
+	-webkit-border-radius: 50px 0px 50px 0px;
+	-moz-border-radius: 50px 0px 50px 0px;
+	border: 4px ridge #000000;
+	margin-top: 20px;
 }
 
 .mainPage-h1 {
@@ -297,7 +345,8 @@ form {
 	width: 55%;
 }
 
-form input {
+form input,
+.works-wrapper.employee-page input {
 	border-radius: 16px;
 }
 
