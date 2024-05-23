@@ -59,6 +59,7 @@ export default {
 
 				}
 			});
+			console.log(this.selectedEmployees);
 			this.selectedEmployees.splice(0, this.selectedEmployees.length)
 		},
 		showFilterEmployeeForm() {
