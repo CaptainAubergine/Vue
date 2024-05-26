@@ -1,24 +1,44 @@
 <template>
-	<section class="profile-form">
-		<div class="works-wrapper wp employee-page">
-			<input v-model="editedEmployee.name" type="text" placeholder="Имя" required>
-			<input v-model="editedEmployee.birth_date" type="date" required>
-			<input v-model="editedEmployee.job_title" type="text" required>
-			<input v-model="editedEmployee.organisation" type="text" required>
-			<input v-model="editedEmployee.img" type="text" required>
-			<img class="employee-page__img" :src="`./img/${editedEmployee.img}`">
+	<section class="people-profile">
+		<h1>Редактирование сотрудника</h1>
+		<div class="edit-form">
+			<span>
+				<p>ФИО:</p>
+				<input v-model="editedEmployee.name" type="text" required>
+			</span>
+			<span>
+				<p>Дата рождения:</p>
+				<input v-model="editedEmployee.birth_date" type="date" required>
+			</span>
+			<span>
+				<p>Должность:</p>
+				<input v-model="editedEmployee.job_title" type="text" required>
+			</span>
+			<span>
+				<p>Организация:</p>
+				<input v-model="editedEmployee.organisation" type="text" required>
+			</span>
+			<span>
+				<p>Изображение:</p>
+				<input v-model="editedEmployee.img" type="text" required>
+			</span>
+			<img :src="`./img/${editedEmployee.img}`">
 		</div>
-		<button class=" emplPage-button" @click="applyChanges">Применить</button>
-		<button class="emplPage-button" @click="cancelChanges">Отменить</button>
+		<button @click="applyChanges">Применить</button>
+		<button @click="cancelChanges">Отменить</button>
 	</section>
 </template>
 
 <script>
+import { animateScroll } from '../js/gsap.js'
+
 export default {
+	name: "PeopleProfile",
 	props: ['employee'],
 	data() {
 		return {
 			editedEmployee: {
+				id: null,
 				name: null,
 				birth_date: null,
 				organisation: null,
@@ -34,6 +54,7 @@ export default {
 	methods: {
 		editing() {
 			console.log("Date before: ", this.employee.birth_date);
+			this.editedEmployee.id = this.employee.id
 			this.editedEmployee.name = this.employee.name
 			this.editedEmployee.birth_date = (this.formatDate(this.employee.birth_date) != "Invalid Date" ? this.formatDate(this.employee.birth_date) : this.employee.birth_date);
 			this.editedEmployee.sex = this.employee.sex
@@ -63,8 +84,13 @@ export default {
 				organisation: null,
 				job_title: null,
 				img: null,
+				sex: null,
+				fired: false,
 			}
 		},
+	},
+	mounted: function () {
+		animateScroll();
 	}
 }
 </script>

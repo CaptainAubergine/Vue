@@ -5,19 +5,17 @@ import { gsap } from './gsap/gsap.min.js';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export function animateScroll() {
-	// window.resizeTo(screen.width + 3000, screen.height - 500)
-
 	let blinds__itemLeft = gsap.utils.toArray('.blinds__item.left')
 	let blinds__itemRight = gsap.utils.toArray('.blinds__item.right')
 	let itemsR = gsap.utils.toArray('.works__right .works__item')
 	let itemsL = gsap.utils.toArray('.works__left .works__item')
 	// console.log(itemsL, itemsR);
 
-	var smoother = ScrollSmoother.create({
+	ScrollSmoother.create({
 		wrapper: '.main-wrapper',
 		content: '.content',
-		smooth: 1.5,
-		effects: true
+		smooth: 0.75,
+		effects: true,
 	})
 
 	blinds__itemLeft.forEach(item => {

@@ -1,7 +1,7 @@
 <template>
 	<!-- && people.fired.toString().includes(this.filterFired.toString())-->
 	<div :key="people.name"
-		v-if="isLeft && incrementIndex(index) % 2 == 0 && people.fired.toString().includes(this.filterFired.toString())"
+		v-if="isLeft && incrementIndex(id) % 2 == 0 && people.fired.toString().includes(this.filterFired.toString())"
 		class="image works__item" :style="{ 'background-image': 'url(./img/' + people.img + ')' }"
 		@click="openEmployeePage">
 		<div class="blinds_container">
@@ -10,7 +10,7 @@
 		</div>
 	</div>
 	<div :key="people.name"
-		v-else-if="isLeft && incrementIndex(index) % 2 == 1 && people.fired.toString().includes(this.filterFired.toString())"
+		v-else-if="isLeft && incrementIndex(id) % 2 == 1 && people.fired.toString().includes(this.filterFired.toString())"
 		class="text-block works__item" data-lag=".1">
 		<h1 class="text-block__h1">
 			<!-- <router-link :to="{ name: 'EmployeePage' }">{{ people.name }}</router-link> -->
@@ -29,7 +29,7 @@
 		</div>
 		<span v-if="!people.fired">
 			<span class="multiple-fire">
-				<label for="multipleFire">На увольнение</label>
+				<p for="multipleFire">На увольнение</p>
 				<input class="checkbox" name="multipleFire" type="checkbox" v-model="selected" @change="selectedEmployee" />
 			</span>
 			<button @click="setFired" class="works-wrapper__button">Уволить</button>
@@ -37,7 +37,7 @@
 		<button @click="unFired" v-if="people.fired">Восстановить</button>
 	</div>
 	<div
-		v-else-if="!isLeft && incrementIndex(index) % 2 == 0 && people.fired.toString().includes(this.filterFired.toString())"
+		v-else-if="!isLeft && incrementIndex(id) % 2 == 0 && people.fired.toString().includes(this.filterFired.toString())"
 		class="text-block works__item" data-lag=".1">
 		<h1 class="text-block__h1">
 			<!-- <router-link :to="{ name: 'EmployeePage' }">{{ people.name }}</router-link> -->
@@ -57,14 +57,15 @@
 		<span v-if="!people.fired">
 			<button @click="setFired" class="works-wrapper__button">Уволить</button>
 			<span class="multiple-fire">
-				<label for="multipleFire">На увольнение</label>
-				<input class="checkbox" name="multipleFire" type="checkbox" v-model="selected" @change="selectedEmployee" />
+				<p for="multipleFire">На увольнение</p>
+				<input class="checkbox" name="multipleFire" type="checkbox" v-model="selected" v-if="!people.fired"
+					@change="selectedEmployee" />
 			</span>
 		</span>
 		<button @click="unFired" v-if="people.fired">Восстановить</button>
 	</div>
 	<div
-		v-else-if="!isLeft && incrementIndex(index) % 2 == 1 && people.fired.toString().includes(this.filterFired.toString())"
+		v-else-if="!isLeft && incrementIndex(id) % 2 == 1 && people.fired.toString().includes(this.filterFired.toString())"
 		class="image works__item" :style="{ 'background-image': 'url(./img/' + people.img + ')' }"
 		@click="openEmployeePage">
 		<div class="blinds_container">
@@ -86,43 +87,33 @@ export default {
 	},
 	props: {
 		people: Object,
+		id: Number,
 		index: Number,
 		isLeft: Boolean,
 		filterFired: null,
 	},
 	methods: {
 		openEmployeePage() {
-			console.log("Opened employee: ", this.index);
-			this.$router.push({
-				name: 'EmployeePage',
-				params: {
-					selectedEmployeeIndex: this.index,
-				}
-			})
+			console.log("Opened employee: ", this.id);
+			this.$router.push({ name: 'EmployeePage', params: { id: this.id } })
 		},
 		unFired() {
-			this.$emit("unFired", this.index)
-			console.log('People: ', this.people.name)
-			this.$forceUpdate();
+			this.$emit("unFired", this.id)
 		},
 		setFired() {
-			this.$emit("setFired", this.index)
-			console.log('People: ', this.people.name)
-			this.$forceUpdate();
+			this.$emit("setFired", this.id)
 		},
-		incrementIndex: function (index) {
-			// console.log(index++);
-			return index++;
+		incrementIndex: function (id) {
+			return id++;
 		},
 		getGender: function (sex) {
 			return (sex === 0 ? 'мужской' : 'женский');
 		},
 		selectedEmployee() {
-			console.log(this.selected);
 			if (this.selected) {
-				this.$emit("selected", this.index)
+				this.$emit("selected", this.id)
 			} else {
-				this.$emit("unselected", this.index)
+				this.$emit("unselected", this.id)
 			}
 		},
 		date: function (_date) {
@@ -135,6 +126,6 @@ export default {
 	},
 	mounted: function () {
 		animateScroll();
-	},
+	}
 }
 </script>

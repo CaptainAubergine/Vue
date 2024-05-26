@@ -1,76 +1,135 @@
 <template>
-	<section class="works bg black-background">
-		<div v-if="!isEdited" class="works-wrapper wp">
-			<p class="employee-page__p">Имя:&nbsp;&nbsp;&nbsp;{{ employee.name }}</p>
-			<p class="employee-page__p">Дата рождения:&nbsp;&nbsp;&nbsp;{{ employee.birth_date | formatDate }}</p>
-			<p class="employee-page__p">Должность:&nbsp;&nbsp;&nbsp;{{ employee.job_title }}</p>
-			<p class="employee-page__p" v-if="employee.sex == 0">Пол:&nbsp;&nbsp;&nbsp;Мужской</p>
-			<p class="employee-page__p" v-else="employee.sex == 1">Пол&nbsp;&nbsp;:Женский</p>
-			<p class="employee-page__p">Организация:&nbsp;&nbsp;&nbsp;{{ employee.organisation }}</p>
-			<img class="employee-page__img" :src="`./img/${employee.img}`">
-		</div>
-		<PeopleProfile :employee="employee" :isEdited="isEdited" v-else="isEdited" @applyChanges="applyChanges"
-			@cancelChanges="cancelChanges"></PeopleProfile>
-		<button class="emplPage-button" v-if="!isEdited && !employee.fired" @click="editing">Редактировать</button>
-		<button class="emplPage-button" @click="setFired" v-if="!employee.fired && !isEdited">Уволить</button>
-		<button class="emplPage-button" @click="unFired" v-if="employee.fired && !isEdited">Восстановить</button>
-		<button class="emplPage-button">
-			<router-link :to="{ name: 'EmployeeList' }">Вернуться назад</router-link>
-		</button>
-	</section>
+	<div v-if="!loading" class="content employee-page">
+		<section class="works bg black-background">
+			<div class="works-wrapper wp">
+				<PeopleInfo v-if="!isEdited" :employee="employee"></PeopleInfo>
+				<PeopleProfile v-if="isEdited" :employee="employee" @applyChanges="applyChanges" @cancelChanges="cancelChanges">
+				</PeopleProfile>
+				<button v-if="!isEdited && !employee.fired" @click="editing">Редактировать</button>
+				<button @click="setFired" v-if="!employee.fired && !isEdited">Уволить</button>
+				<button @click="unFired" v-if="employee.fired && !isEdited">Восстановить</button>
+				<button @click="previousPage">Вернуться назад
+					<!-- <router-link :to="{ name: 'EmployeeList' }">Вернуться назад</router-link> -->
+				</button>
+				<Medexam v-if="!isEdited && medexams.length > 0" :medexams="medexams" :employee="employee"></Medexam>
+			</div>
+		</section>
+	</div>
+	<LoaderComponent v-else :loading="loading"></LoaderComponent>
 </template>
 
 <script>
 import PeopleProfile from '../components/PeopleProfile.vue'
+import LoaderComponent from '../components/LoaderComponent.vue'
+import PeopleInfo from '../components/PeopleInfo.vue'
+import Medexam from '../components/Medexam.vue'
+import axios from 'axios'
+
 export default {
 	name: "EmployeePage",
-	props: ['employeeIndex', 'employees'],
+	props: ['id'],
 	components: {
 		PeopleProfile,
+		LoaderComponent,
+		PeopleInfo,
+		Medexam,
 	},
 	data() {
 		return {
 			employee: Object,
 			isEdited: false,
+			loading: true,
+			medexams: [],
+			editingEmployee: {
+				name: null,
+				birth_date: null,
+				sex: null,
+				organisation: null,
+				job_title: null,
+				img: null
+			}
 		}
 	},
 	created() {
-		// console.log(this.employees);
-		// console.log(this.employeeIndex);
-		this.employee = this.employees[this.employeeIndex]
+		this.startLoading()
 	},
 	methods: {
+		previousPage() {
+			this.$router.go(-1);
+		},
+		startLoading() {
+			setTimeout(() => {
+				this.loadMedExams()
+				this.loadEmployees()
+			}, 500);
+		},
+		loadEmployees() {
+			const params = {
+				id: this.id
+			}
+			// console.log('params: ', params)
+			axios.get(`http://localhost:3000/employees`, { params })
+				.then((response) => {
+					this.employee = response.data[0]
+				})
+				.catch((error) => {
+					console.log("Ошибка - ", error);
+				})
+				.finally(() => {
+					this.loading = false;
+				});
+		},
 		editing() {
-			this.isEdited = true;
-			// console.log(this.employee.birth_date);
-			// this.employee.birth_date = (this.formatDate(this.employee.birth_date) != "Invalid Date" ? this.formatDate(this.employee.birth_date) : this.employee.birth_date);
-			// console.log(this.employee.birth_date);
+			this.isEdited = true
 		},
 		applyChanges(editedEmployee) {
 			editedEmployee.birth_date = Math.floor(new Date(editedEmployee.birth_date).getTime() / 1000)
-			this.$set(this.employees, this.employeeIndex, editedEmployee)
 			this.employee = editedEmployee;
 			this.isEdited = false;
-			console.log("Employees: ", this.employees, "\nEditedEmployee: ", editedEmployee);
+			this.saveChanges()
+			console.log("Employees: ", this.employee, "\nEditedEmployee: ", editedEmployee);
 		},
 		cancelChanges() {
 			this.isEdited = false;
 		},
 		setFired() {
-			this.$set(this.employees[this.employeeIndex], 'fired', true);
-			// console.log('EmplPage fired: ', this.employee.fired);
+			this.employee.fired = true
+			this.saveChanges()
 			this.$forceUpdate();
+		},
+		saveChanges() {
+			this.loading = true;
+			axios.put(`http://localhost:3000/employees/${this.employee.id}`, this.employee)
+				.then(() => {
+					this.loadEmployees()
+				})
+				.catch((error) => {
+					console.log("Ошибка - ", error);
+				})
+			console.log('this.employee.id: ', this.employee.id, '\nthis.employee: ', this.employee);
 		},
 		unFired() {
-			this.$set(this.employees[this.employeeIndex], 'fired', false);
+			this.employee.fired = false
+			this.saveChanges()
 			// console.log('EmplPage fired: ', this.employee.fired);
 			this.$forceUpdate();
 		},
-	},
-	// beforeRouteEnter(to, from, next) {
-	// 	next(vm => {
-	// 		vm.$forceUpdate();
-	// 	}, { flush: true });
-	// }
+		loadMedExams() {
+			const params = {
+				employeeId: this.id
+			}
+			axios.get(`http://localhost:3000/medexams`, { params })
+				.then((response) => {
+					this.medexams = response.data
+					console.log("This employee medexams: ", this.medexams);
+				})
+				.catch((error) => {
+					console.log("Ошибка - ", error);
+				})
+				.finally(() => {
+					this.loading = false;
+				});
+		}
+	}
 }
 </script>

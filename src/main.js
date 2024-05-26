@@ -6,27 +6,12 @@ import MainPage from './pages/MainPage.vue';
 import EmployeeList from './pages/EmployeeList.vue';
 import EmployeePage from './pages/EmployeePage.vue';
 import AddEmployee from './pages/AddEmployee.vue';
-import FiredEmployees from './pages/FiredEmployees.vue';
 import NotFound from './pages/NotFound.vue';
-import { employees } from './js/employees.js'
+import MedexamPage from './pages/MedexamPage.vue'
+import MedexamList from './pages/MedexamList.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
-
-const routes = [
-	{ path: '/', component: MainPage },
-	// { path: '/employee-page/:selectedEmployeeIndex', name: 'EmployeePage', component: EmployeePage, props: (route) => ({ employee: employees[parseInt(route.params.selectedEmployeeIndex)] }), },
-	{ path: '/employee-page/:selectedEmployeeIndex', name: 'EmployeePage', component: EmployeePage, props: (route) => ({ employeeIndex: parseInt(route.params.selectedEmployeeIndex), employees: employees }) },
-	{ path: '/employee-list', name: 'EmployeeList', component: EmployeeList, props: { employees: employees, fired: false } },
-	{ path: '/add-employee', component: AddEmployee, props: { employees: employees } },
-	{ path: '/fired-employees', component: FiredEmployees, props: { employees: employees, fired: true } },
-	{ path: '/404', component: NotFound },
-	{ path: '*', redirect: '/404' },
-];
-
-const router = new VueRouter({
-	routes,
-});
 
 Vue.filter('formatDate', function (value) {
 	const date = new Date(value * 1000)
@@ -35,15 +20,29 @@ Vue.filter('formatDate', function (value) {
 		new Date(value).toLocaleDateString('ru-RU'))
 })
 
+const routes = [
+	{ path: '/', name: 'MainPage', component: MainPage },
+	{ path: '/employee-page/:id', name: 'EmployeePage', component: EmployeePage, props: (route) => ({ id: parseInt(route.params.id) }) },
+	{ path: '/employee-list', name: 'EmployeeList', component: EmployeeList, props: { fired: false } },
+	{ path: '/add-employee', name: 'AddEmployee', component: AddEmployee },
+	{ path: '/fired-employees', name: 'FiredEmployees', component: { ...EmployeeList }, props: { fired: true } },
+	{ path: '/medexam-page', name: 'MedexamPage', component: MedexamPage, props: (route) => ({ idMedexam: parseInt(route.params.idMedexam), idEmployee: parseInt(route.params.idEmployee) }) },
+	{ path: '/medexam-list', name: 'MedexamList', component: MedexamList },
+	{ path: '/404', name: 'NotFound', component: NotFound },
+	{ path: '*', redirect: '/404' },
+];
+
+const router = new VueRouter({
+	routes,
+});
+
 new Vue({
 	router,
-	computed: {
-		employees: function () {
-			return employees;
-		},
-	},
 	render: h => h(App),
 }).$mount('#app')
+
+
+
 
 const html = document.querySelector('.vars');
 

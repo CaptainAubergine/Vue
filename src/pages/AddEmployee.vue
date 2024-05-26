@@ -1,33 +1,20 @@
 <template>
-	<section class="works bg black-background">
-		<div class="works-wrapper wp">
-			<button @click="showAddEmployeeForm">Добавить нового сотрудника</button>
-			<people-adding :is-showed-adding="isShowedAdding" @onEmployeeAdded="onEmployeeAdded" />
-		</div>
-	</section>
+	<div class="content add-employee-page">
+		<section class="works bg black-background">
+			<div class="works-wrapper wp">
+				<people-adding></people-adding>
+			</div>
+		</section>
+	</div>
 </template>
 
 <script>
 import PeopleAdding from "../components/PeopleAdding.vue"
+
 export default {
+	name: 'AddEmployee',
 	components: {
 		PeopleAdding
-	},
-	data() {
-		return {
-			isShowedAdding: false,
-		}
-	},
-	props: ['employees'],
-	methods: {
-		showAddEmployeeForm() {
-			this.isShowedAdding = true;
-		},
-		onEmployeeAdded(newEmployee) {
-			this.employees.push(newEmployee);
-			// this.isShowedAdding = false;
-			// console.log(this.employees);
-		},
 	}
 }
 </script>

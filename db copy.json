@@ -1,0 +1,131 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "employees": [
+    {
+      "id": "1",
+      "name": "Александренков Евгений Анатольевич",
+      "birth_date": 456861600,
+      "organisation": "ООО 'Тест'",
+      "job_title": "Водитель",
+      "img": "m1.png",
+      "fired": false,
+      "sex": 0
+    },
+    {
+      "id": "2",
+      "name": "Афанасьев Дмитрий Алексеевич",
+      "birth_date": -157698000,
+      "organisation": "ИП Алексеев В.И.",
+      "job_title": "Грузчик",
+      "img": "m2.png",
+      "fired": false,
+      "sex": 1
+    },
+    {
+      "id": "3",
+      "name": "Ложкина Елена Борисовна",
+      "birth_date": 249696000,
+      "organisation": "ООО 'Медицина'",
+      "job_title": "Врач",
+      "img": "w1.png",
+      "fired": true,
+      "sex": 1
+    },
+    {
+      "id": "4",
+      "name": "Бондаренко Артем Васильевич",
+      "birth_date": 841255200,
+      "sex": 0,
+      "organisation": "ООО 'Залесье'",
+      "job_title": "Инженер-химик",
+      "fired": false,
+      "img": "m3.png"
+    },
+    {
+      "id": "5",
+      "name": "Акулов Евгений Анатольевич",
+      "birth_date": 465328800,
+      "sex": 0,
+      "organisation": "ООО 'Партнёр'",
+      "job_title": "Водитель",
+      "fired": false,
+      "img": "m4.png"
+    },
+    {
+      "id": "6",
+      "name": "Кошкина Оксана Валерьевна",
+      "birth_date": 913921200,
+      "sex": 1,
+      "organisation": "ИП Яковлева Н.С.",
+      "job_title": "Бухгалтер",
+      "fired": false,
+      "img": "w2.png"
+    },
+    {
+      "id": "7",
+      "name": "Кузнецов Сергей Викторович",
+      "birth_date": -149922000,
+      "sex": 0,
+      "organisation": "ООО 'Тест'",
+      "job_title": "Водитель",
+      "fired": false,
+      "img": "m5.png"
+    },
+    {
+      "id": "8",
+      "name": "Загородных Дмитрий Дмитриевич",
+      "birth_date": 499719600,
+      "sex": 0,
+      "organisation": "ООО 'Красный бор'",
+      "job_title": "Водитель",
+      "fired": false,
+      "img": "m6.png"
+    },
+    {
+      "id": "9",
+      "name": "Плюшкин Иван Аркадьевич",
+      "birth_date": 975697200,
+      "sex": 0,
+      "organisation": "ООО 'Автозапчасти'",
+      "job_title": "Механик",
+      "fired": true,
+      "img": "m7.png"
+    },
+    {
+      "id": "10",
+      "name": "Александренков Жанна Георгиевна",
+      "birth_date": 932752800,
+      "sex": 1,
+      "organisation": "ИП Ларин А.С.",
+      "job_title": "Менеджер",
+      "fired": false,
+      "img": "w3.png"
+    }
+  ]
+}

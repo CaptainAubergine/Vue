@@ -1,9 +1,7 @@
 <template>
 	<div class="main-wrapper">
 		<Sidebar></Sidebar>
-		<div class="content">
-			<router-view></router-view>
-		</div>
+		<router-view></router-view>
 	</div>
 </template>
 
@@ -12,23 +10,9 @@ import Sidebar from './components/Sidebar.vue';
 import { animateScroll } from './js/gsap.js'
 
 export default {
+	name: 'App',
 	components: {
 		Sidebar,
-	},
-	methods: {
-		incrementIndex: function (index) {
-			return index++;
-		},
-		getGender: function (sex) {
-			return (sex === 0 ? 'мужской' : 'женский');
-		},
-		date: function (_date) {
-			const date = new Date(_date * 1000);
-			const day = ('0' + date.getDate()).slice(-2);
-			const month = ('0' + (date.getMonth() + 1)).slice(-2);
-			const year = date.getFullYear();
-			return `${day}.${month}.${year}`;
-		},
 	},
 	mounted: function () {
 		animateScroll();
