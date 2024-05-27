@@ -2,8 +2,8 @@
 	<tr>
 		<td class="first" @click="redirectToMedexam()">{{ medexam.doctor_name }}</td>
 		<td>{{ medexam.date_exam | formatDate }}</td>
-		<td v-if="medexam.status" style="color: green;">Пройден</td>
-		<td v-if="!medexam.status" style="color: red">Не пройден</td>
+		<td class="last" v-if="medexam.status" style="color: green;">Пройден</td>
+		<td class="last" v-if="!medexam.status" style="color: red">Не пройден</td>
 	</tr>
 </template>
 <script>

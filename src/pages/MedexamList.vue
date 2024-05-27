@@ -8,10 +8,10 @@
 					<table>
 						<thead>
 							<tr>
-								<th>Врач</th>
-								<th>Сотрудник</th>
-								<th>Дата</th>
-								<th>Статус</th>
+								<th style="width: 30%;">Врач</th>
+								<th style="width: 30%;">Сотрудник</th>
+								<th style="width: 20%;">Дата</th>
+								<th style="width: 20%;">Статус</th>
 							</tr>
 						</thead>
 						<tbody>

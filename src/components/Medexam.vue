@@ -6,9 +6,9 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Врач</th>
-						<th>Дата</th>
-						<th>Статус</th>
+						<th style="width: 50%;">Врач</th>
+						<th style="width: 25%;">Дата</th>
+						<th style="width: 25%;">Статус</th>
 					</tr>
 				</thead>
 				<tbody>

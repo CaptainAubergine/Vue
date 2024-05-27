@@ -3,8 +3,8 @@
 		<td class="first" @click="toMedexamPage">{{ medexam.doctor_name }}</td>
 		<td class="second" @click="toEmployeePage">{{ medexam.employee.name }}</td>
 		<td>{{ medexam.date_exam | formatDate }}</td>
-		<td v-if="medexam.status" style="color: green;">Пройден</td>
-		<td v-else style="color: red;">Не пройден</td>
+		<td class="last" v-if="medexam.status" style="color: green;">Пройден</td>
+		<td class="last" v-else style="color: red;">Не пройден</td>
 	</tr>
 </template>
 
